@@ -1,16 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { VideoPlayer } from '../../../entities/VideoPlayer'
 import VideoJS from '../../components/video'
 import './styles.css'
+
+import packageJson from '../../../../package.json'
 
 import { io } from 'socket.io-client'
 
 const PageHome = () => {
-    
+
     const [urlVideo, setUrlVideo] = useState('')
     const [playing, setPlaying] = useState(false)
 
-    const socket = useRef(io('ws://localhost:3001'))
+    const socket = useRef(io(packageJson.proxy))
+    
     useEffect(() => {
         socket.current.on('video.set', (urlVideo) => {
             setUrlVideo(urlVideo)
